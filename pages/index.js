@@ -23,12 +23,12 @@ export default function Index({ preview, allPosts, allCategories }) {
         <Container>
           <Intro />
           <div className="grid grid-cols-4 gap-4">
-            <div className="col-span-1">
+            <div className="col-span-4 md:col-span-1 mb-4 md:mb-0">
               <div className="text-xl font-bold pr-12 pb-4">Topics</div>
               <ul>
                 {
                   categories && categories.map((cat, key) => (
-                    <li key={key}>
+                    <li key={key} className='italic'>
                       <Link as={`/topics/${cat.slug}`} href="/topics/[slug]">
                         {cat.name}
                       </Link>
@@ -39,7 +39,7 @@ export default function Index({ preview, allPosts, allCategories }) {
             </div>
             {heroPost && (
               <HeroPost
-                className='col-span-3'
+                className='col-span-4 md:col-span-3'
                 title={heroPost.title}
                 coverImage={heroPost.coverImage}
                 date={heroPost.date}
