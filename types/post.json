@@ -42,6 +42,12 @@
         "label": "author"
       }
     },
+    "category": {
+      "type": "Text",
+      "config": {
+        "label": "category"
+      }
+    },
     "uid": {
       "type": "UID",
       "config": {
