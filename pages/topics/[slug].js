@@ -20,6 +20,8 @@ export default function Topic({ category, preview }) {
     return <ErrorPage statusCode={404} />
   }
 
+  if (!category) return <ErrorPage statusCode={404} />
+
   const posts = category.posts.map(post => post.fields)
 
   return (
@@ -56,13 +58,14 @@ export async function getStaticProps({ params, preview = false }) {
   return {
     props: {
       preview,
-      category: data[0]
+      category: data && data[0]
     },
   }
 }
 
 export async function getStaticPaths() {
   const allCategories = await getAllCategoriesWithSlug()
+  console.log('All categories_ ', allCategories)
   return {
     paths: allCategories?.map(({ slug }) => `/topics/${slug}`) ?? [],
     fallback: true,
