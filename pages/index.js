@@ -12,11 +12,7 @@ export default function Index({ preview, allPosts, allCategories }) {
   const heroPost = allPosts[0]
   const morePosts = allPosts.slice(1)
 
-<<<<<<< HEAD
-  const categories = allCategories
-=======
   const categories = allCategories.filter(cat => cat.posts && cat.posts.length > 0)
->>>>>>> feature/categories
 
   return (
     <>
