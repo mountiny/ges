@@ -10,9 +10,10 @@ export default function HeroPost({
   excerpt,
   author,
   slug,
+  className,
 }) {
   return (
-    <section>
+    <section className={`${className}`}>
       <div className="mb-8 md:mb-16">
         <CoverImage title={title} slug={slug} url={coverImage.url} />
       </div>
