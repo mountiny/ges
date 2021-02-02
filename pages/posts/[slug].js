@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
+import cn from 'classnames'
 import Head from 'next/head'
 import ErrorPage from 'next/error'
 import Container from '../../components/container'
@@ -19,15 +20,22 @@ function getEntries(data, slug) {
   return data ? data.entries.data.reverse().filter(a => a.article_id === slug) : []
 }
 
+const MAX_LENGTH = 200
+
 export default function Post({ post, morePosts, preview }) {
   const router = useRouter()
   const { data, errorMessage } = useCommentsEntries()
 
 
   const [entries, setEntries] = useState([])
+  const [comment, setComment] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
   const { register, handleSubmit, watch, errors, reset } = useForm();
+
+  useEffect(() => {
+    setComment(watch("content"))
+  }, [watch])
 
 
   useEffect(() => {
@@ -39,6 +47,8 @@ export default function Post({ post, morePosts, preview }) {
 
   useEffect(() => {
     setEntries(getEntries(data, post.slug))
+    reset()
+    setComment("")
   }, [post])
 
   if (!router.isFallback && !post) {
@@ -51,14 +61,14 @@ export default function Post({ post, morePosts, preview }) {
       alert("You have written nothing!")
       return
     }
-    if (content.length > 10000) {
-      content = content.substring(0, 10000)
+    if (content.length > MAX_LENGTH) {
+      alert(`Maximum length of the comment is ${MAX_LENGTH} characters!`)
+      return
     }
     
     setSubmitting(true)
     createCommentEntry(post.slug, content)
       .then((data) => {
-        console.log('data: ', data.data)
         entries.unshift(data.data.createComment)
         reset()
         setEntries(entries)
@@ -109,9 +119,16 @@ export default function Post({ post, morePosts, preview }) {
               <div className="flex flex-col max-w-2xl mx-auto">
                 <h3 className="font-bold text-2xl pb-4 pt-12">Leave Comments</h3>
                 <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
-                  <textarea className="bg-accents-8 rounded h-32 resize-none px-4 py-4" name="content" id="" cols="30" rows="10" ref={register}></textarea>
-                  <div className="mt-4 flex justify-end">
-                    <input className="px-4 py-2 bg-accents-1 text-secondary font-bold rounded" type="submit" value={submitting ? "Submitting" : "Add comment"}/>
+                  <textarea className="bg-accents-8 rounded h-32 resize-none px-4 py-4" name="content" id="" cols="30" rows="10" ref={register()}></textarea>
+                  <div className="mt-4 flex justify-between">
+                    <div className="px-4 py-2">
+                      Characters left: <b className={cn(comment?.length > MAX_LENGTH && 'text-red')}>{MAX_LENGTH-comment?.length}</b>
+                    </div>
+                    <input 
+                      className={cn("px-4 py-2 bg-accents-1 hover:bg-primary transition-colors duration-200 text-secondary font-bold rounded", comment?.length > MAX_LENGTH ? 'cursor-not-allowed' : 'cursor-pointer')}
+                      type="submit" 
+                      disabled={comment?.length > MAX_LENGTH ? true : false}
+                      value={submitting ? "Submitting" : "Add comment"}/>
                   </div>
                 </form>
               </div>
