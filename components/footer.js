@@ -13,16 +13,25 @@ export default function Footer() {
             <a
                 href="https://www.gla.ac.uk/"
                 target="_blank"
-                className="mx-3 bg-black hover:bg-white hover:text-black border border-black text-white font-bold py-3 px-12 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0"
-              >
-              University of Glasgow
+                className="mx-3 bg-black hover:bg-white hover:text-black border border-black text-white font-bold text-sm py-3 px-8 lg:px-6 duration-200 transition-colors mb-6 lg:mb-0"
+            >
+              <span className="whitespace-nowrap">
+                University of Glasgow
+              </span>
             </a>
             <a
               href="https://www.facebook.com/GlasgowEU/"
               target="_blank"
-              className="mx-3 bg-black hover:bg-white hover:text-black border border-black text-white font-bold py-3 px-12 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0"
+              className="mx-3 bg-black hover:bg-white hover:text-black border border-black text-white font-bold text-sm py-3 px-8 lg:px-6 duration-200 transition-colors mb-6 lg:mb-0"
             >
               Facebook
+            </a>
+             <a
+              href="https://www.instagram.com/gueuropeansoc/"
+              target="_blank"
+              className="mx-3 bg-black hover:bg-white hover:text-black border border-black text-white font-bold text-sm py-3 px-8 lg:px-6 duration-200 transition-colors mb-6 lg:mb-0"
+            >
+              Instagram
             </a>
           </div>
         </div>
