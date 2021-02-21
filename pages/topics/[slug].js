@@ -66,8 +66,10 @@ export async function getStaticProps({ params, preview = false }) {
 export async function getStaticPaths() {
   const allCategories = await getAllCategoriesWithSlug()
   console.log('All categories_ ', allCategories)
+
+  const categories = allCategories.filter(cat => cat.posts && cat.posts.length > 0)
   return {
-    paths: allCategories?.map(({ slug }) => `/topics/${slug}`) ?? [],
+    paths: categories?.map(({ slug }) => `/topics/${slug}`) ?? [],
     fallback: true,
   }
 }
