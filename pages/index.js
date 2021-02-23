@@ -9,8 +9,22 @@ import Link from 'next/link'
 import { CMS_NAME } from '../lib/constants'
 
 export default function Index({ preview, allPosts, allCategories }) {
-  const heroPost = allPosts[0]
-  const morePosts = allPosts.slice(1)
+
+  let heroPost;
+  let morePosts;
+
+
+  if (allPosts.some(post => post.hero)) {
+
+    heroPost = allPosts.find(post => post.hero)
+    morePosts = allPosts.filter(post => post.slug != heroPost.slug)
+    
+  } else {
+
+    heroPost = allPosts[0]
+    morePosts = allPosts.slice(1)
+  }
+
 
   const categories = allCategories.filter(cat => cat.posts && cat.posts.length > 0)
 
